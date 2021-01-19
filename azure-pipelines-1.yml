@@ -9,11 +9,41 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, Cameron!
-  displayName: 'Run a one-line script'
+stages:
+- stage: CI
+  displayName: 'Continuous Integration'
+  jobs:
+  - job: Build
+  ...
+  - job: Publish
+  
+  stage: 'Build'
+  displayName: 'Build'
+  dependsOn: CI
+  jobs:
+  - template: ${{ variables.releaseTemplate }}
+    parameters:
+      variableGroup: 'Dev'
+      environment: 'DEV'
+      artifactName: ${{ variables.artifactName }}
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+stage: 'Storage'
+  displayName: 'Storage'
+  dependsOn: Build
+  jobs:
+  - template: ${{ variables.releaseTemplate }}
+    parameters:
+      variableGroup: 'Dev'
+      environment: 'DEV'
+      artifactName: ${{ variables.artifactName }}
+
+stage: 'Deploy'
+  displayName: 'Deploy'
+  dependsOn: Storage
+  jobs:
+  - template: ${{ variables.releaseTemplate }}
+    parameters:
+      variableGroup: 'Dev'
+      environment: 'DEV'
+      artifactName: ${{ variables.artifactName }}
+
