@@ -4,24 +4,11 @@ stages:
   - job: BuildJob
     steps:
     - script: echo Building!
-- stage: Artefact storag
+- stage: Test
   jobs:
-  - job: Fetch .pom file
+  - job: TestOnWindows
     steps:
-    - script: import com.microsoft.demo.Demo;
-import org.junit.Test;
-
-public class MyTest {
-    @Test
-    public void test_method_1() {
-        Demo d = new Demo();
-        d.DoSomething(true);
-    }
-
-    @Test
-    public void test_method_2() {
-    }
-}
+    - script: echo Testing on Windows!
   - job: TestOnLinux
     steps:
     - script: echo Testing on Linux!
@@ -29,4 +16,4 @@ public class MyTest {
   jobs:
   - job: Deploy
     steps:
-    - script: echo Deploying the code!
+    - script: echo Deploying the code! 
