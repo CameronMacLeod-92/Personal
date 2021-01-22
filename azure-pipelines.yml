@@ -6,12 +6,12 @@ stages:
     - script: echo Building!
 - stage: Test
   jobs:
-  - job: TestOnWindows
+  - job: TestMutliStep1
     steps:
-    - script: echo Testing on Windows!
+    - script: echo TestMutliStep1
   - job: TestOnLinux
     steps:
-    - script: echo Testing on Linux!
+    - script: echo TestMutliStep2
 - stage: Deploy
   jobs:
   - job: Deploy
