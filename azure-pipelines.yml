@@ -9,7 +9,7 @@ stages:
   - job: TestMutliStep1
     steps:
     - script: echo TestMutliStep1
-  - job: TestOnLinux
+  - job: TestMutliStep2
     steps:
     - script: echo TestMutliStep2
 - stage: Deploy
